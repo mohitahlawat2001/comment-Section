@@ -14,6 +14,7 @@ const Comment = ({
   const [showInput, setShowInput] = useState(false);
   const [expand, setExpand] = useState(false);
   const inputRef = useRef(null);
+  const [sortOrder, setSortOrder] = useState("asc"); // Initial sort order
 
   useEffect(() => {
     inputRef?.current?.focus();
@@ -43,6 +44,12 @@ const Comment = ({
 
   return (
     <div>
+      <button
+        onClick={() => setSortOrder(sortOrder === "asc" ? "desc" : "asc")}
+      >
+        Sort {sortOrder === "asc" ? "Descending" : "Ascending"}
+      </button>
+
       <div className={comment.id === 1 ? "inputContainer" : "commentContainer"}>
         {comment.id === 1 ? (
           <>
@@ -146,17 +153,19 @@ const Comment = ({
           </div>
         )}
 
-        {comment?.items?.map((cmnt) => {
-          return (
-            <Comment
-              key={cmnt.id}
-              handleInsertNode={handleInsertNode}
-              handleEditNode={handleEditNode}
-              handleDeleteNode={handleDeleteNode}
-              comment={cmnt}
-            />
-          );
-        })}
+        {comment?.items
+          ?.sort((a, b) => (sortOrder === "asc" ? a.id - b.id : b.id - a.id))
+          .map((cmnt) => {
+            return (
+              <Comment
+                key={cmnt.id}
+                handleInsertNode={handleInsertNode}
+                handleEditNode={handleEditNode}
+                handleDeleteNode={handleDeleteNode}
+                comment={cmnt}
+              />
+            );
+          })}
       </div>
     </div>
   );
