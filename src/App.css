@@ -67,3 +67,17 @@
   background-color: #569dff;
   letter-spacing: 0.8px;
 }
+
+@media (max-width: 768px) {
+  /* Adjust styles for smaller screens here, e.g.: */
+  .commentContainer {
+    width: 90%;
+  }
+  .inputContainer__input {
+    font-size: 14px;
+  }
+  .reply {
+    font-size: 10px;
+    padding: 3px;
+  }
+}
