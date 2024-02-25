@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import Action from "./Action";
 import { ReactComponent as DownArrow } from "../assets/down.svg";
 import { ReactComponent as UpArrow } from "../assets/up.svg";
+import "./Comment.css";
 
 const Comment = ({
   handleInsertNode,
@@ -45,142 +46,135 @@ const Comment = ({
   };
 
   return (
-    <div>
-      <button
-        onClick={() => setSortOrder(sortOrder === "asc" ? "desc" : "asc")}
-      >
-        Sort {sortOrder === "asc" ? "Descending" : "Ascending"}
-          </button>
-          
-          {/* New button for sorting by replies */}
-      <button onClick={() => setSortByReplies(!sortByReplies)}>
-        Sort by Replies
-      </button>
-
-      <div className={comment.id === 1 ? "inputContainer" : "commentContainer"}>
-        {comment.id === 1 ? (
-          <>
-            <input
-              type="text"
-              className="inputContainer__input first_input"
-              autoFocus
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              placeholder="type..."
-            />
-
-            <Action
-              className="reply comment"
-              type="COMMENT"
-              handleClick={onAddComment}
-            />
-          </>
-        ) : (
-          <>
-            <span
-              contentEditable={editMode}
-              suppressContentEditableWarning={editMode}
-              ref={inputRef}
-              style={{ wordWrap: "break-word" }}
-            >
-              {comment.name}
-            </span>
-
-            <div style={{ display: "flex", marginTop: "5px" }}>
-              {editMode ? (
-                <>
-                  <Action
-                    className="reply"
-                    type="SAVE"
-                    handleClick={onAddComment}
-                  />
-                  <Action
-                    className="reply"
-                    type="CANCEL"
-                    handleClick={() => {
-                      if (inputRef.current)
-                        inputRef.current.innerText = comment.name;
-                      setEditMode(false);
-                    }}
-                  />
-                </>
-              ) : (
-                <>
-                  <Action
-                    className="reply"
-                    type={
-                      <>
-                        {expand ? (
-                          <UpArrow width="10px" height="10px" />
-                        ) : (
-                          <DownArrow width="10px" height="10px" />
-                        )}{" "}
-                        REPLY
-                      </>
-                    }
-                    handleClick={handleNewComment}
-                  />
-                  <Action
-                    className="reply"
-                    type="EDIT"
-                    handleClick={() => {
-                      setEditMode(true);
-                    }}
-                  />
-                  <Action
-                    className="reply"
-                    type="DELETE"
-                    handleClick={handleDelete}
-                  />
-                </>
-              )}
-            </div>
-          </>
-        )}
+    <div className="comment-container">
+      <div className="sort-buttons">
+        <button
+          className="sort-button"
+          onClick={() => setSortOrder(sortOrder === "asc" ? "desc" : "asc")}
+        >
+          Sort {sortOrder === "asc" ? "Descending" : "Ascending"}
+        </button>
+        <button className="sort-button" onClick={() => setSortByReplies(!sortByReplies)}>
+          Sort by Replies
+        </button>
       </div>
 
-      <div style={{ display: expand ? "block" : "none", paddingLeft: 25 }}>
-        {showInput && (
-          <div className="inputContainer">
-            <input
-              type="text"
-              className="inputContainer__input"
-              autoFocus
-              onChange={(e) => setInput(e.target.value)}
-            />
-            <Action className="reply" type="REPLY" handleClick={onAddComment} />
-            <Action
-              className="reply"
-              type="CANCEL"
-              handleClick={() => {
-                setShowInput(false);
-                if (!comment?.items?.length) setExpand(false);
-              }}
-            />
+      {comment.id === 1 ? (
+        <div className="input-container">
+          <input
+            type="text"
+            className="input-container__input first_input"
+            autoFocus
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder="type..."
+          />
+          <Action
+            className="reply comment comment-button"
+            type="COMMENT"
+            handleClick={onAddComment}
+          />
+        </div>
+      ) : (
+        <div className="comment-content">
+          <span
+            contentEditable={editMode}
+            suppressContentEditableWarning={editMode}
+            ref={inputRef}
+            style={{ wordWrap: "break-word" }}
+            className="comment-text"
+          >
+            {comment.name}
+          </span>
+          <div className="reply-actions">
+            {editMode ? (
+              <>
+                <Action
+                  className="reply"
+                  type="SAVE"
+                  handleClick={onAddComment}
+                />
+                <Action
+                  className="reply"
+                  type="CANCEL"
+                  handleClick={() => {
+                    if (inputRef.current)
+                      inputRef.current.innerText = comment.name;
+                    setEditMode(false);
+                  }}
+                />
+              </>
+            ) : (
+              <>
+                <Action
+                  className="reply"
+                  type={
+                    <>
+                      {expand ? (
+                        <UpArrow width="10px" height="10px" />
+                      ) : (
+                        <DownArrow width="10px" height="10px" />
+                      )}{" "}
+                      REPLY
+                    </>
+                  }
+                  handleClick={handleNewComment}
+                />
+                <Action
+                  className="reply"
+                  type="EDIT"
+                  handleClick={() => setEditMode(true)}
+                />
+                <Action
+                  className="reply"
+                  type="DELETE"
+                  handleClick={handleDelete}
+                />
+              </>
+            )}
           </div>
-        )}
+        </div>
+      )}
 
-        {comment?.items
-          ?.sort((a, b) => {
-          // Sort based on replies if sortByReplies is true
-          if (sortByReplies) {
-            return b.items.length - a.items.length; // Descending order of replies
-          } else {
-            return (sortOrder === "asc" ? a.id - b.id : b.id - a.id); // Sort by ID
-          }
+      {showInput && (
+        <div className="input-container">
+          <input
+            type="text"
+            className="input-container__input"
+            autoFocus
+            onChange={(e) => setInput(e.target.value)}
+          />
+          <Action className="reply" type="REPLY" handleClick={onAddComment} />
+          <Action
+            className="reply"
+            type="CANCEL"
+            handleClick={() => {
+              setShowInput(false);
+              if (!comment?.items?.length) setExpand(false);
+            }}
+          />
+        </div>
+      )}
+
+      {comment?.items
+        ?.sort((a, b) => {
+            // ... sorting logic
+            // Sort based on replies if sortByReplies is true
+     if (sortByReplies) {
+      return b.items.length - a.items.length; // Descending order of replies
+     } else {
+      return (sortOrder === "asc" ? a.id - b.id : b.id - a.id); // Sort by ID
+     }
         })
-          .map((cmnt) => {
-            return (
-              <Comment
-                key={cmnt.id}
-                handleInsertNode={handleInsertNode}
-                handleEditNode={handleEditNode}
-                handleDeleteNode={handleDeleteNode}
-                comment={cmnt}
-              />
-            );
-          })}
-      </div>
+        .map((cmnt) => (
+          <Comment
+            key={cmnt.id}
+            handleInsertNode={handleInsertNode}
+            handleEditNode={handleEditNode}
+            handleDeleteNode={handleDeleteNode}
+            comment={cmnt}
+          />
+        ))}
     </div>
   );
 };

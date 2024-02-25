@@ -1,0 +1,154 @@
+/* Global styles */
+body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Comment container */
+  .comment-container {
+    background-color: #d3d3d3e0;
+    border-radius: 5px;
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .firstContainer {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .comment-container:hover {
+    background-color: #d3d3d3bf;
+  }
+  
+  /* First comment container (with input) */
+  .first_input {
+    margin-bottom: 10px;
+  }
+  
+  /* Username */
+  .comment-name {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  /* Reply actions */
+  .reply {
+    background-color: transparent;
+    border: none;
+    color: #4e4e4e;
+    font-size: 12px;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-right: 5px;
+  }
+
+  .reply-actions{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  
+  .reply:hover {
+    background-color: #d3d3d3e0;
+  }
+  
+  /* Reply and edit icons */
+  .reply svg {
+    margin-right: 5px;
+  }
+  
+  /* Comment content */
+  .comment {
+    background-color: #569dff;
+    color: #ffffff;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+    word-wrap: break-word;
+  }
+  
+  .comment:hover {
+    background-color: #4a8fd1;
+  }
+
+  .comment-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .comment-button{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 10px;
+    padding: 5px;
+    border-radius: 5px;
+  }
+
+  /* Expandable reply input */
+  .input-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .inputContainer__input {
+    border: 1px solid lightgray;
+    padding: 5px;
+    flex-grow: 1;
+    border-radius: 5px;
+    background-color: #e7e7e7;
+  }
+  
+  /* Responsive design */
+  @media (max-width: 768px) {
+    .comment-container {
+      width: 90%;
+    }
+  
+    .comment-name {
+      font-size: 14px;
+    }
+  
+    .reply {
+      font-size: 10px;
+      padding: 3px 8px;
+    }
+  
+    .inputContainer__input {
+      font-size: 14px;
+    }
+  }
+  
+  /* Sorting buttons */
+  .sort-buttons {
+    display: flex;
+    margin-bottom: 10px;
+  }
+  
+  .sort-button {
+    background-color: transparent;
+    border: none;
+    color: #4e4e4e;
+    font-size: 12px;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-right: 5px;
+  }
+  
+  .sort-button:hover {
+    background-color: #d3d3d3e0;
+
+  }
+  
