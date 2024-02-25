@@ -2,6 +2,8 @@ import { useState, useRef, useEffect } from "react";
 import Action from "./Action";
 import { ReactComponent as DownArrow } from "../assets/down.svg";
 import { ReactComponent as UpArrow } from "../assets/up.svg";
+import { ReactComponent as Star } from "../assets/star.svg";
+import { ReactComponent as Unstar } from "../assets/unstar.svg";
 import "./Comment.css";
 
 const Comment = ({
@@ -17,6 +19,9 @@ const Comment = ({
   const inputRef = useRef(null);
     const [sortOrder, setSortOrder] = useState("asc"); // Initial sort order
     const [sortByReplies, setSortByReplies] = useState(false); // New state for sorting by replies
+    const [starred, setStarred] = useState(false); // New state for starred comments
+  
+    
 
 
   useEffect(() => {
@@ -129,7 +134,16 @@ const Comment = ({
                   className="reply"
                   type="DELETE"
                   handleClick={handleDelete}
-                />
+                    />
+                    <button
+                      className="starred"
+                      onClick={() => setStarred(!starred)}
+                    >
+                      {starred ?
+                        <Unstar width="20px" height="20px" /> :
+                        <Star width="20px" height="20px" />
+                      }
+                    </button>
               </>
             )}
           </div>
